@@ -12,12 +12,19 @@
 const isEven = number => number % 2 === 0;
 
 /**
- * Calculate how many @param {Number} number we has in range(odd or even) [1, @param {Number} toNumber] 
+ * Calculate how many @param {Number} number we has in range(odd or even) [1, @param {Number} toNumber]
  * @param {Number} toNumber
  * @param {Number} number
  * @returns {Number}
  */
 const countOfNumbersEvenOrOdd = (toNumber, number = 5) => {
+  //prop for saveCountOfNumbersEvenOrOdd
+  const makeProp = `${toNumber}${number}`;
+  // already calculate number?
+  if (countOfNumbersEvenOrOdd[makeProp]) {
+    return countOfNumbersEvenOrOdd[makeProp];
+  }
+  
   const iterationStartFrom = isEven(toNumber) ? 2 : 1;
 
   const iter = (resAcc, power) => {
@@ -26,25 +33,37 @@ const countOfNumbersEvenOrOdd = (toNumber, number = 5) => {
 
     const whilePowerLessNumber = (acc, index) => {
       if (index > toNumber) return acc;
-      if (index % currentNumber !== 0) return whilePowerLessNumber(acc, index + 2);
+      if (index % currentNumber !== 0)
+        return whilePowerLessNumber(acc, index + 2);
 
       return whilePowerLessNumber(acc + 1, index + 2);
     };
 
-    const newAcc = resAcc + whilePowerLessNumber(0, iterationStartFrom); 
+    const newAcc = resAcc + whilePowerLessNumber(0, iterationStartFrom);
 
     return iter(newAcc, power + 1);
   };
 
-  return iter(0, 1);
+  const result = iter(0, 1);
+
+  // save result, next time we just return result
+  countOfNumbersEvenOrOdd[makeProp] = result;
+
+  return result;
 };
 
 /**
- * Calculate how many @param {Number} number we has in range [1, @param {Number} toNumber] 
+ * Calculate how many @param {Number} number we has in range [1, @param {Number} toNumber]
  * @param {Number} toNumber
  * @param {Number} number
  */
 const countNumbers = (toNumber, number = 5) => {
+  const makeProp = `${toNumber}${number}`;
+  // already calculate number?
+  if (countNumbers[makeProp]) {
+    return countNumbers[makeProp];
+  }
+
   const iter = (accZerosCount, exponent) => {
     const countOfDividers = Math.floor(toNumber / Math.pow(number, exponent));
 
@@ -57,7 +76,12 @@ const countNumbers = (toNumber, number = 5) => {
     return iter(accZerosCount + countOfDividers, exponent + 1);
   };
 
-  return iter(0, 1);
+  const result = iter(0, 1);
+
+  // save result, next time we just return result 
+  countNumbers[makeProp] = result;
+
+  return result;
 };
 
 /**
