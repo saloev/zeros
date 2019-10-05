@@ -18,7 +18,6 @@ const isEven = number => number % 2 === 0;
  * @returns {Number}
  */
 const countOfNumbersEvenOrOdd = (toNumber, number = 5) => {
-  //prop for saveCountOfNumbersEvenOrOdd
   const makeProp = `${toNumber}${number}`;
   // already calculate number?
   if (countOfNumbersEvenOrOdd[makeProp]) {
